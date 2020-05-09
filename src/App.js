@@ -19,18 +19,21 @@ export default function App() {
       .get(urlLyric)
       .then(function(response) {
         setLyricText(
-          response.data.split("\n").reduce((l, b) => {
-            return [
-              ...l,
-              {
-                data: b.slice(10),
-                startTime:
-                  Number(b.slice(1, 3)) * 60 * 1000 +
-                  Number(b.slice(4, 6)) * 1000 +
-                  Number(b.slice(7, 9)) * 10
-              }
-            ];
-          }, [])
+          response.data
+            .split("\n")
+            .reduce((l, b) => {
+              return [
+                ...l,
+                {
+                  data: b.slice(10),
+                  startTime:
+                    Number(b.slice(1, 3)) * 60 * 1000 +
+                    Number(b.slice(4, 6)) * 1000 +
+                    Number(b.slice(7, 9)) * 10
+                }
+              ];
+            }, [])
+            .filter(e => e.data.length !== 0 && e.data.length !== 1)
         );
       })
       .catch(function(error) {
@@ -41,7 +44,7 @@ export default function App() {
   const onTimeUpdate = () => {
     setCurrentTime(ref.current.currentTime * 1000);
     refScroll.current?.offsetTop &&
-      seCurrentHeight(refScroll.current?.offsetTop - 160);
+      seCurrentHeight(refScroll.current?.offsetTop - 360);
     window.scroll({ top: currentHeight, behavior: "smooth" });
   };
 
@@ -60,7 +63,7 @@ export default function App() {
               {e.data.length !== 1 && (
                 <div
                   ref={
-                    e.startTime <= currentTime &&
+                    e.startTime < currentTime &&
                     currentTime <= lyricText[i + 1]?.startTime
                       ? refScroll
                       : undefined
