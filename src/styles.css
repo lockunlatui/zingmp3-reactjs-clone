@@ -1,0 +1,15 @@
+.App {
+  font-family: Roboto, sans-serif;
+  text-align: center;
+}
+
+.audioContainer {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  background-size: cover;
+  padding: 20px 0px 20px calc((100% - 1920px) / 2);
+  background-color: #1d1924;
+  background-image: url(https://static-zmp3.zadn.vn/skins/zmp3-v5.2/images/bg-miniplayer-v1.png);
+  left: 0px;
+}
